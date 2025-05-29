@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+
+class A1 {int a1;};
+class A2 : public A1 {int a2;};
+class A3 : public A1 {int a3;};
+class A4 : public A2, public A3 {int a4;};
+class A5 : public A3 {int a5;};
+class A6 : public A2, public A5 {int a6;};
+class A7 : public A4, public A3 {int a7;};
+
+class VA1 {int a1;};
+class VA2 : virtual public VA1 {int a2;};
+class VA3 : virtual public VA1 {int a3;};
+class VA4 : virtual public VA2, virtual public VA3 {int a4;};
+class VA5 : virtual public VA3 {int a5;};
+class VA6 : virtual public VA2, virtual public VA5 {int a6;};
+class VA7 : virtual public VA4, virtual public VA3 {int a7;};
+
+main() {
+    cout << sizeof(A6) << "\n" << sizeof(A7);
+    cout << "\n" << sizeof(VA6) << "\n" << sizeof(VA7);
+}
