@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Student {
+protected:
+    string name;
+    int age;
+    string university;
+
+public:
+    Student() : name("Unknown"), age(0), university("Unknown") {}
+    Student(const string& name, int age, const string& u) : name(name), age(age),  university(u) {}
+    virtual ~Student () {}
+
+    friend ostream& operator<<(ostream& os, const Student& s) {
+        os << "Name:" << s.name << " Age:" << s.age << " University:" << s.university;
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, Student& s) {
+        cout << "Enter name: ";
+        is >> s.name;
+        cout << "Enter age: ";
+        is >> s.age;
+        cout << "Enter university: ";
+        is >> s.university;
+        return is;
+    }
+};
+
+class Father {
+protected:
+    string name;
+    int age;
+    int children;
+
+public:
+    Father() : name("Unknown"), age(0), children(0) {}
+    Father(const string& name, int age, int ch) : name(name), age(age),  children(ch) {}
+    virtual ~Father () {}
+
+    friend ostream& operator<<(ostream& os, const Father& f) {
+        os << "Name:" << f.name << " Age:" << f.age << " Amount of children:" << f.children;
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, Father& f) {
+        cout << "Enter name: ";
+        is >> f.name;
+        cout << "Enter age: ";
+        is >> f.age;
+        cout << "Enter the amount of children: ";
+        is >> f.children;
+        return is;
+    }
+};
+
+class Student_Father : public Student, public Father {
+public:
+    Student_Father() : Student(), Father() {}
+    Student_Father(const string& name, int age, const string& university, int children) : Student(name, age, university), Father(name, age, children) {}
+    ~Student_Father() {}
+
+    friend ostream& operator<<(ostream& os, const Student_Father& s) {
+        os << static_cast<const Student&>(s);
+        os << " Amount of children: " << s.children;
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, Student_Father& s) {
+        is >> static_cast<Student&>(s);
+        cout << "Enter the amount of children: ";
+        is >> s.children;
+        return is;
+    }
+};
+
+main() {
+    Student_Father s1("Alex", 21, "Chnu", 1);
+    cout << s1 << endl;
+    
+    Student_Father s2;
+    cin >> s2;
+    cout << s2 << endl;
+}
