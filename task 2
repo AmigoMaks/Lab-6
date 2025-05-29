@@ -1,0 +1,59 @@
+#include <iostream>
+
+using namespace std;
+
+class Figure {
+public:
+    virtual void square () const = 0;
+    virtual ~Figure() {}
+};
+
+class Rectangle : public Figure {
+    double a, b;
+public:
+    Rectangle (double a, double b) : a(a), b(b) {}
+    void square () const override {
+        cout << "S = " << a * b << endl;
+    }
+};
+
+class Circle : public Figure {
+    double pi = 3.14, r;
+public:
+    Circle (double r) : r(r) {}
+    void square () const override {
+        cout << "S = " << pi * r * r << endl;
+    }
+};
+
+class RectangularTriange : public Figure {
+    double a, b;
+public:
+    RectangularTriange (double a, double b) : a(a), b(b) {}
+    void square () const override {
+        cout << "S = " << a * b * 0.5 << endl;
+    }
+};
+
+class Trapezium : public Figure {
+    double a, b, h;
+public:
+    Trapezium (double a, double b, double h) : a(a), b(b), h(h) {}
+    void square () const override {
+        cout << "S = " << (a+b)/2 * h << endl;
+    }
+};
+
+main() {
+    Rectangle rect(6, 12);
+    rect.square();
+
+    Circle circ(4);
+    circ.square();
+
+    RectangularTriange recTrian(8, 7);
+    recTrian.square();
+
+    Trapezium tra(5, 9, 3);
+    tra.square();
+}
